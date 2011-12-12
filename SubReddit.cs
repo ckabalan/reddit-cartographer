@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace RedditCartographer {
 	class SubReddit {
@@ -9,10 +10,24 @@ namespace RedditCartographer {
 		private int m_Subscribers;
 		private string m_Title;
 		private string m_Name;
-		private string m_URL;
+		private Point m_Location;
+		private Point m_NextLocation;
+		private int m_X;
+		private int m_Y;
+		private Vector m_Velocity;
 
-		public SubReddit() {
-			m_RelatedSubReddits = new List<string>();
+		public double Mass {
+			get { return 1; }
+		}
+
+		public Point Location {
+			get { return m_Location; }
+			set { m_Location = value; }
+		}
+
+		public Point NextLocation {
+			get { return m_NextLocation; }
+			set { m_NextLocation = value; }
 		}
 
 		public string Name {
@@ -30,12 +45,43 @@ namespace RedditCartographer {
 			set { m_Subscribers = value; }
 		}
 
+		public int Xp {
+			get { return m_X; }
+		}
+
+		public int Yp {
+			get { return m_Y; }
+		}
+
+		public Vector Velocity {
+			get { return m_Velocity; }
+			set { m_Velocity = value; }
+		}
+
+		public SubReddit() {
+			m_RelatedSubReddits = new List<string>();
+		}
+
 		public void AddRelatedSubReddit(string Name) {
 			m_RelatedSubReddits.Add(Name);
 		}
 
 		public List<string> GetRelatedSubReddits() {
 			return m_RelatedSubReddits;
+		}
+
+		public bool IsRelatedTo(SubReddit OtherReddit) {
+			foreach (string curSubReddit in m_RelatedSubReddits) {
+				if (curSubReddit == OtherReddit.Name) {
+					return true;
+				}
+			}
+			foreach (string curSubReddit in OtherReddit.GetRelatedSubReddits()) {
+				if (curSubReddit == this.Name) {
+					return true;
+				}
+			}
+			return false;
 		}
 
 	}

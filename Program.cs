@@ -8,8 +8,9 @@ namespace RedditCartographer {
 		static void Main(string[] args) {
 			PrintWelcome();
 			Surveyor Surveyor = new Surveyor();
-			Cartographer Cartographer = new Cartographer(Surveyor);
-			Surveyor.ProcessTopSubReddits(10);
+			Cartographer Cartographer = new Cartographer(Surveyor, 2000, 2000);
+			Surveyor.ProcessTopSubReddits(5);
+			Cartographer.DrawMap();
 			Console.WriteLine("Execution Finished. Press ENTER to quit!");
 			Console.ReadLine();
 		}
